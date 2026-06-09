@@ -61,6 +61,13 @@ src/
 | GET | /api/v1/blog/bulk | Yes | Fetch all blog posts with pagination |
 | GET | /api/v1/blog/:id | Yes | Fetch a single blog post |
 
+
+## Live API
+
+Base URL: https://blog-app-backend.vaibhavchavhan45.workers.dev
+
+All blog routes require Authorization header: Bearer <token>
+
 ## Setup
 
 **1. Clone the repo and install dependencies**
