@@ -1,6 +1,20 @@
-# Blog Backend
+# [BlogNest](https://blog-app-backend.vaibhavchavhan45.workers.dev)
 
-A REST API backend for a blogging platform built with Hono, Prisma, and PostgreSQL, deployed on Cloudflare Workers.
+BlogNest is a serverless REST API backend for a blogging platform, built with Hono, Prisma and PostgreSQL, deployed on Cloudflare Workers, with JWT authentication.
+
+The platform lets authors sign up, publish and edit their own blog posts, and lets signed-in users browse a paginated feed or open any article.
+
+[Live API](https://blog-app-backend.vaibhavchavhan45.workers.dev)
+
+## Features
+
+- Sign up and sign in with JWT authentication
+- Passwords hashed with bcrypt, and duplicate accounts blocked
+- Create, read and update blog posts
+- Authors can update only their own posts
+- Paginated feed of blog posts (`?page=1&limit=10`)
+- Request validation with Zod
+- Runs on Cloudflare Workers, with Prisma Accelerate for connection pooling on the edge
 
 ## Tech Stack
 
@@ -10,6 +24,31 @@ A REST API backend for a blogging platform built with Hono, Prisma, and PostgreS
 - Zod — request validation
 - bcryptjs — password hashing
 - JWT — authentication via hono/jwt
+
+## API Routes
+
+### User
+
+| Method | Route | Auth | Description |
+|--------|-------|------|-------------|
+| POST   | /api/v1/user/signup | No | Create a new account |
+| POST   | /api/v1/user/signin | No | Sign in and get JWT |
+
+### Blog
+
+| Method | Route | Auth | Description |
+|--------|-------|------|-------------|
+| POST   | /api/v1/blog | Yes | Create a new blog post |
+| PUT    | /api/v1/blog | Yes | Update an existing blog post |
+| GET    | /api/v1/blog/bulk | Yes | Fetch all blog posts with pagination |
+| GET    | /api/v1/blog/:id | Yes | Fetch a single blog post |
+
+
+## Live API
+
+Base URL: https://blog-app-backend.vaibhavchavhan45.workers.dev
+
+All blog routes require Authorization header: Bearer <token>
 
 ## Project Structure
 
@@ -42,31 +81,6 @@ src/
 └── lib/
     └── accelerateClient.ts   # Prisma Accelerate client helper
 ```
-
-## API Routes
-
-### User
-
-| Method | Route | Auth | Description |
-|--------|-------|------|-------------|
-| POST | /api/v1/user/signup | No | Create a new account |
-| POST | /api/v1/user/signin | No | Sign in and get JWT |
-
-### Blog
-
-| Method | Route | Auth | Description |
-|--------|-------|------|-------------|
-| POST | /api/v1/blog | Yes | Create a new blog post |
-| PUT | /api/v1/blog | Yes | Update an existing blog post |
-| GET | /api/v1/blog/bulk | Yes | Fetch all blog posts with pagination |
-| GET | /api/v1/blog/:id | Yes | Fetch a single blog post |
-
-
-## Live API
-
-Base URL: https://blog-app-backend.vaibhavchavhan45.workers.dev
-
-All blog routes require Authorization header: Bearer <token>
 
 ## Setup
 
@@ -115,6 +129,10 @@ Add your production environment variables in `wrangler.jsonc` or via the Cloudfl
 
 ## Notes
 
-- All blog routes are protected — include `Authorization: Bearer <token>` in request headers
+- All blog routes are protected: include `Authorization: Bearer <token>` in request headers
 - Pagination on `/bulk` route via `?page=1&limit=10` query params
 - Prisma Accelerate is required for Cloudflare Workers compatibility for direct PostgreSQL connections are not supported in edge environments
+
+## Author
+
+Built by **Vaibhav Chavhan** | [GitHub](https://github.com/vaibhavchavhan45) | [LinkedIn](https://www.linkedin.com/in/vaibhavchavhan/) | [Portfolio](https://vaibhav-chavhan.vercel.app) | Email: [chavhanvaibhav708@gmail.com](mailto:chavhanvaibhav708@gmail.com)
